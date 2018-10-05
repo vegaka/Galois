@@ -190,6 +190,10 @@ if(ENABLE_DIST_GALOIS)
       set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS}; -gencode arch=compute_${GENCODE},code=sm_${GENCODE})
     endforeach()
 
+    #Fix wrong gencode. 52 is for the gtx 980, 35 is for the tesla k40.
+    set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS}; -gencode arch=compute_52,code=sm_52)
+    set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS}; -gencode arch=compute_35,code=sm_35)
+
     cuda_include_directories("${CMAKE_SOURCE_DIR}/libgpu/include")
 
     # MGPU v1.1
