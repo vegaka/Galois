@@ -27,7 +27,7 @@ set(ENABLE_DIST_GALOIS OFF CACHE BOOL "Enable distributed features")
 set(ENABLE_HETERO_GALOIS OFF CACHE BOOL "Enable heterogeneous features")
 set(USE_LCI OFF CACHE BOOL "Use LCI network runtime instead of MPI")
 set(USE_BARE_MPI OFF CACHE BOOL "Use MPI directly (no dedicated network-runtime thread)")
-set(CUDA_CAPABILITY "3.7,6.1" CACHE STRING "Comma-separated CUDA capability version numbers")
+set(CUDA_CAPABILITY "3.5,5.2,7.0" CACHE STRING "Comma-separated CUDA capability version numbers")
 ###### General features ######
 set(USE_GPROF OFF CACHE BOOL "Enable GCC profiling")
 set(USE_VTUNE OFF CACHE BOOL "Use VTune for profiling")
@@ -189,10 +189,6 @@ if(ENABLE_DIST_GALOIS)
     foreach(GENCODE ${GENCODES})
       set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS}; -gencode arch=compute_${GENCODE},code=sm_${GENCODE})
     endforeach()
-
-    #Fix wrong gencode. 52 is for the gtx 980, 35 is for the tesla k40.
-    set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS}; -gencode arch=compute_52,code=sm_52)
-    set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS}; -gencode arch=compute_35,code=sm_35)
 
     cuda_include_directories("${CMAKE_SOURCE_DIR}/libgpu/include")
 
